@@ -1,0 +1,56 @@
+version: '2.1'
+services:
+  ecom_vue:
+    image: ecom_vue_image
+    restart: always
+    ports:
+      - 80:80
+    build:
+      context: ./ecommerce
+      dockerfile: ./Dockerfile
+    # command: sh -c "nginx -g daemon off;"
+    environment:
+      - VUE_APP_BASE_URL=http://ecom_golang:8000
+
+  ecom_golang:
+    image: ecom_golang_v1
+    logging:
+      options:
+        max-size: '50m'
+        max-file: '5'
+      driver: json-file
+    restart: always
+    ports:
+      - 8000:8000
+    build:
+      context: ./backend
+      dockerfile: ./Dockerfile
+    environment:
+      - WAIT_HOSTS=postgres:5432
+      - WAIT_HOSTS_TIMEOUT=300
+      - WAIT_SLEEP_INTERVAL=5
+      - WAIT_HOST_CONNECT_TIMEOUT=30
+      - ACCESS_SEC=${ACCESS_SEC}
+    command: sh -c '/wait && ./ecom_golang'
+    volumes:
+      - ./logs:/app/src/logs
+      - ./resources:/app/resources
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:13.2
+    logging:
+      options:
+        max-size: '50m'
+        max-file: '5'
+      driver: json-file
+    ports:
+      - 5432:5432
+    expose:
+      - 5432
+    environment:
+      - POSTGRES_DB=backend
+      - POSTGRES_USER=backend
+      - POSTGRES_PASSWORD=heverlEE
+      # - POSTGRES_EXTENSIONS=uuid-ossp
