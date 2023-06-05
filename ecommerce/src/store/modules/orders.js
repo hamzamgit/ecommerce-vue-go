@@ -41,7 +41,7 @@ console.log(state.dataOptions)
                             customerCompany: item.User?.Company?.Name,
                             orderName: item.ProductName,
                             customerName: item?.User?.Name,
-                            orderDate: item.CreatedAt,
+                            orderDate: item.OrderDate,
                             deliveredAmount: item.DeliveredAmount,
                             totalAmount: item.TotalAmount
                         }

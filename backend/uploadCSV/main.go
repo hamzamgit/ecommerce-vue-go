@@ -3,13 +3,12 @@ package main
 import (
 	"encoding/csv"
 	"fmt"
-	"os"
-	"strconv"
-	"time"
-
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/joho/godotenv"
+	"os"
+	"strconv"
+	"time"
 )
 
 var DB *gorm.DB
@@ -41,7 +40,7 @@ type Order struct {
 }
 
 func main() {
-	e := godotenv.Load("../.env")
+	e := godotenv.Load(".env")
 	if e != nil {
 		panic("unable to load env")
 	}
@@ -101,15 +100,16 @@ func UploadSCV() {
 		orderID, productName, companyName, username, orderDate, deliveredAmount, totalAmount := row[0], row[1], row[2], row[3], row[4], row[5], row[6]
 
 		// Insert or fetch the company
-		company := Company{}
-		err = DB.Where("name = ?", companyName).FirstOrCreate(&company).Error
+		var company Company
+		err = DB.FirstOrCreate(&company, Company{Name: companyName}).Error
 		if err != nil {
 			fmt.Printf("Error: %s\n", err.Error())
 		}
 
 		// Insert or fetch the user
-		user := User{}
-		err = DB.Where("username = ?", username).FirstOrCreate(&user).Error
+
+		var user User
+		err = DB.FirstOrCreate(&user, User{Name: username}).Error
 		if err != nil {
 			fmt.Printf("Error: %s\n", err.Error())
 		}
@@ -139,7 +139,7 @@ func UploadSCV() {
 			TotalAmount:     totalPrice,
 		}
 
-		err = DB.Create(&order).Error
+		err = DB.FirstOrCreate(&order, Order{OrderId: orderID}).Error
 		if err != nil {
 			fmt.Printf("Error: %s\n", err.Error())
 		}

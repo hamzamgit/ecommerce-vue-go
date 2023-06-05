@@ -5,10 +5,11 @@ import (
 	models "backend/Models"
 	"encoding/json"
 	"fmt"
-	"github.com/gorilla/mux"
 	"net/http"
 	"strconv"
 	"time"
+
+	"github.com/gorilla/mux"
 )
 
 func CreateOrder(w http.ResponseWriter, r *http.Request) {
@@ -42,7 +43,7 @@ func GetOrders(w http.ResponseWriter, r *http.Request) {
 	var totalCount int64
 
 	// Create a new query
-	query := Database.DB.Model(&models.Order{})
+	query := Database.DB.Preload("User").Preload("User.Company").Find(&orders)
 
 	// Apply search filter if provided
 	if search != "" {
