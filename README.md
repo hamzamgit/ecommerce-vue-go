@@ -64,7 +64,8 @@ $ docker-compose exec web bash
 
 
 ## Accessing the Application
-You can now access the application by opening your web browser and navigating to http://localhost.
+You can now access the application by opening your web browser and navigating to http://localhost, Live Deployement URL
+http://54.174.172.252
 
 
 ## Additional Information
