@@ -51,8 +51,6 @@
                   <img alt="search" class="icon left" src="../assets/arrow.png" width="15" height="15" />
               </div>
           </div>
-<!--          <span class="label">Go to: </span>-->
-<!--          <input type="text" class="indicator-input" value="1" />-->
       </div>
 </template>
 

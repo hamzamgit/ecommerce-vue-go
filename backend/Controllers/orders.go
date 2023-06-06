@@ -52,7 +52,7 @@ func GetOrders(w http.ResponseWriter, r *http.Request) {
 
 	// Apply date range filter if provided
 	if startDate != "" && endDate != "" {
-		query = query.Where("created_at BETWEEN ? AND ?", startDate, endDate)
+		query = query.Where("order_date BETWEEN ? AND ?", startDate, endDate)
 	}
 
 	// Count the total number of orders
