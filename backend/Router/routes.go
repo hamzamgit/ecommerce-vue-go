@@ -15,18 +15,18 @@ func Serve() {
 	router := mux.NewRouter()
 
 	// Company Routes
-	router.HandleFunc("/company", controllers.GenerateCompany).Methods("POST")
-	router.HandleFunc("/company", controllers.GetCompanies).Methods("GET")
+	router.HandleFunc("/api/company", controllers.GenerateCompany).Methods("POST")
+	router.HandleFunc("/api/company", controllers.GetCompanies).Methods("GET")
 
 	// User Routes
-	router.HandleFunc("/users", controllers.GetUsers).Methods("GET")
+	router.HandleFunc("/api/users", controllers.GetUsers).Methods("GET")
 
 	// Order Routes
-	router.HandleFunc("/order", controllers.CreateOrder).Methods("POST")
-	router.HandleFunc("/order", controllers.GetOrders).Methods("GET")
-	router.HandleFunc("/order/{id}", controllers.GetOrder).Methods("GET")
-	router.HandleFunc("/order/{id}", controllers.GetOrders).Methods("PUT", "PATCH")
-	router.HandleFunc("/order/{id}", controllers.GetOrders).Methods("DELETE")
+	router.HandleFunc("/api/order", controllers.CreateOrder).Methods("POST")
+	router.HandleFunc("/api/order", controllers.GetOrders).Methods("GET")
+	router.HandleFunc("/api/order/{id}", controllers.GetOrder).Methods("GET")
+	router.HandleFunc("/api/order/{id}", controllers.GetOrders).Methods("PUT", "PATCH")
+	router.HandleFunc("/api/order/{id}", controllers.GetOrders).Methods("DELETE")
 
 	options := cors.Options{
 		// 		AllowedOrigins: []string{},
